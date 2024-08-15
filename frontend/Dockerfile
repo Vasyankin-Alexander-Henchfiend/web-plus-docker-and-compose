@@ -18,10 +18,10 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY package*.json ./
 # Флаг --omit=dev означает "не ставить dev-зависимости"
-RUN npm i --omit=dev && npm i -g pm2
+RUN npm i --omit=dev
 COPY . .
 # Копируем результат сборки из build-стадии
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/build ./build
 EXPOSE 3000
 # Команда для запуска
-CMD ["pm2-runtime", "start", "ecosystem.config.js"]
+CMD ["node", "start"]

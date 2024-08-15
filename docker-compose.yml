@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: back-container
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - 4000:3000
+    env_file: ./backend/.env
+    restart: unless-stopped
+    depends_on:
+      - data-base
+    networks:
+      - backend
+
+  frontend:
+    container_name: front-container
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - 8081:3000
+    restart: unless-stopped
+
+  data-base:
+    container_name: db-container
+    image: postgres:16.4
+    env_file: ./backend/.env
+    restart: unless-stopped
+    networks:
+      - backend
+    ports:
+      - 5455:5432
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
+
+networks:
+  backend:
