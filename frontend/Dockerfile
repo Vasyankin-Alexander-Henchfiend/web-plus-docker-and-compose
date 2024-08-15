@@ -14,7 +14,6 @@ COPY . .
 RUN npm run build
 
 FROM node:16-alpine As production
-ENV NODE_ENV=production
 WORKDIR /app
 COPY package*.json ./
 # Флаг --omit=dev означает "не ставить dev-зависимости"
@@ -24,4 +23,4 @@ COPY . .
 COPY --from=builder /app/build ./build
 EXPOSE 3000
 # Команда для запуска
-CMD ["node", "start"]
+CMD ["npm", "run", "start"]

@@ -11,7 +11,7 @@ services:
     env_file: ./backend/.env
     restart: unless-stopped
     depends_on:
-      - data-base
+      - database
     networks:
       - backend
 
@@ -24,13 +24,14 @@ services:
       - 8081:3000
     restart: unless-stopped
 
-  data-base:
+  database:
     container_name: db-container
     image: postgres:16.4
     env_file: ./backend/.env
     restart: unless-stopped
     networks:
       - backend
+    hostname: database
     ports:
       - 5455:5432
     volumes:
