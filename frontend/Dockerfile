@@ -13,7 +13,7 @@ RUN npm i
 COPY . .
 RUN npm run build
 
-FROM nginx:latest As production
+FROM nginx:1.23.1-alpine As production
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY ./nginx/conf.d  /etc/nginx/conf.d
 EXPOSE 80
